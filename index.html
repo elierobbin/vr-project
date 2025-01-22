@@ -1,68 +1,122 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
-    <title>VR Scène</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Grand Budapest Hotel Elevator</title>
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
   </head>
   <body>
-    <a-scene fog="type: exponential; color: #AFA; density: 0.2;">
-      <!-- Caméra avec contrôle -->
-      <a-entity
-        camera
-        look-controls
-        wasd-controls="acceleration:100"
-        position="0 1.6 0"
-      ></a-entity>
-
-      <a-entity light="color: #AFA; intensity: 1.5" position="-1 1 0"></a-entity>
-      <a-entity light="type: directional; color: #EEE; intensity: 0.5" position="-1 1 0"></a-entity>
-
-      <!-- Fond personnalisé -->
-      <a-sky color="#16181D" material="src: assets/astre.jpg"> </a-sky>
-
-      <!-- Planète (Lune) -->
-      <a-sphere
-        position="0 5.284 -7.172"
-        radius="1"
-        opacity="0.5"
-        scale=".3 .3 .3"
-        material="src: assets/moon.jpg"
-        rotation="0 0 0"
-      >
-      </a-sphere>
-
-      <!-- Lumière Directionnelle -->
-      <a-light type="directional" position="0 5 5" intensity="0.5"></a-light>
-
-      <!-- Charger le modèle GLB -->
-      <a-entity
-        gltf-model="assets/models/VR-Mobil.glb"
-        position="-0.078 0.450 -3.446"
-        scale=".3 .3 .3"
-        rotation="0 45 0"
-      ></a-entity>
-
-      <a-entity
-        gltf-model="assets/models/Tree.glb"
-        position="-2 0.222 -6.241"
-        scale=".3 .3 .3"
-        rotation="0 90 0"
-      ></a-entity>
-
-      <a-entity
-        gltf-model="assets/models/Lamp-post.glb"
-        position="0.816 -0.029 -4.149"
-        scale=".1 .1 .1"
-      >
-      </a-entity>
-
+    <a-scene>
       <!-- Sol -->
       <a-plane
-      id="ground"
-      rotation="-90 0 0"
-      width="100"
-      height="100"
-      material="src: assets/parking.jpg; repeat: 10 10"
-    ></a-plane>
+        position="0 0 0"
+        rotation="-90 0 0"
+        width="10"
+        height="10"
+        color="#2D2D"
+      ></a-plane>
+
+      <!-- Lumière dans l'ascenseur -->
+      <a-light
+        type="point"
+        position="0 3 0"
+        intensity="1.5"
+        color="#ffe6cc"
+      ></a-light>
+
+      <!-- Lumière sur les portes -->
+      <a-light
+        type="point"
+        position="3 3 3"
+        intensity="1"
+        color="#ffe6cc"
+      ></a-light>
+
+            <!-- Lumière sur mur du fond -->
+            <a-light
+            type="point"
+            position="3 3 -3"
+            intensity="1"
+            color="#ffe6cc"
+          ></a-light>
+
+      <!-- Lumière sur murs côtés -->
+      <a-light
+        type="point"
+        position="-3 -3 3"
+        intensity="1"
+        color="#ffe6cc"
+      ></a-light>
+
+      <!-- Mur du fond -->
+      <a-plane
+        material="side: double"
+        material="side: double"
+        position="0 2 -1"
+        rotation="0 0 0"
+        width="2"
+        height="4"
+        color="#d46a6a"
+      ></a-plane>
+
+      <!-- Mur de gauche -->
+      <a-plane
+        material="side: double"
+        position="-1 2 0"
+        rotation="0 90 0"
+        width="2"
+        height="4"
+        color="#d46a6a"
+      ></a-plane>
+
+      <!-- Mur de droite -->
+      <a-plane
+        material="side: double"
+        position="1 2 0"
+        rotation="0 270 0"
+        width="2"
+        height="4"
+        color="#d46a6a"
+      ></a-plane>
+
+      <!-- Plafond -->
+      <a-plane
+        material="side: double"
+        position="0 4 0"
+        rotation="90 0 0"
+        width="10"
+        height="10"
+        color="#2D2D"
+        material="width: 22"
+        geometry="skipCache: true"
+        scale="-0.2 0.2 1"
+      ></a-plane>
+
+      <!-- Porte gauche -->
+      <a-plane
+        position="-0.510 2 1"
+        rotation=""
+        width="2"
+        height="4"
+        material="side: double; opacity: 1; color: #d46a6a"
+        scale="0.5 1 1"
+        color="#d46a6a"
+      ></a-plane>
+
+      <!-- Porte droite -->
+      <a-plane
+        position="0.510 2 1"
+        rotation=""
+        width="2"
+        height="4"
+        material="side: double"
+        scale="0.5 1 1"
+        color="#d46a6a"
+      ></a-plane>
+
+      <!-- Caméra utilisateur -->
+      <a-camera position="0 1.6 5"></a-camera>
     </a-scene>
   </body>
 </html>
