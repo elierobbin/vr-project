@@ -14,44 +14,50 @@
         rotation="-90 0 0"
         width="10"
         height="10"
-        color="#2D2D"
+        material="color: #2D2D; roughness: 1; metalness: 0.1"
       ></a-plane>
-
+    
+      <!-- Lumière ambiante (ajoutée) -->
+      <a-light
+        type="ambient"
+        intensity="0.3"
+        color="#ffffff"
+      ></a-light>
+    
       <!-- Lumière dans l'ascenseur -->
       <a-light
         type="point"
         position="0 3 0"
-        intensity="1.5"
+        intensity="1"
         color="#ffe6cc"
       ></a-light>
-
+    
       <!-- Lumière sur les portes -->
       <a-light
         type="point"
         position="3 3 3"
-        intensity="1"
+        intensity="0.8"
         color="#ffe6cc"
       ></a-light>
-
-            <!-- Lumière sur mur du fond -->
-            <a-light
-            type="point"
-            position="3 3 -3"
-            intensity="1"
-            color="#ffe6cc"
-          ></a-light>
-
+    
+      <!-- Lumière sur mur du fond -->
+      <a-light
+        type="point"
+        position="3 3 -3"
+        intensity="0.8"
+        color="#ffe6cc"
+      ></a-light>
+    
       <!-- Lumière sur murs côtés -->
       <a-light
         type="point"
-        position="-3 -3 3"
-        intensity="1"
+        position="-3 3 3"
+        intensity="0.8"
         color="#ffe6cc"
       ></a-light>
-
+    
       <!-- Mur du fond -->
       <a-plane
-        material="side: double"
         material="side: double"
         position="0 2 -1"
         rotation="0 0 0"
@@ -59,7 +65,7 @@
         height="4"
         color="#d46a6a"
       ></a-plane>
-
+    
       <!-- Mur de gauche -->
       <a-plane
         material="side: double"
@@ -69,7 +75,7 @@
         height="4"
         color="#d46a6a"
       ></a-plane>
-
+    
       <!-- Mur de droite -->
       <a-plane
         material="side: double"
@@ -79,7 +85,7 @@
         height="4"
         color="#d46a6a"
       ></a-plane>
-
+    
       <!-- Plafond -->
       <a-plane
         material="side: double"
@@ -87,12 +93,9 @@
         rotation="90 0 0"
         width="10"
         height="10"
-        color="#2D2D"
-        material="width: 22"
-        geometry="skipCache: true"
-        scale="-0.2 0.2 1"
+        material="color: #2D2D; roughness: 1; metalness: 0.1"
       ></a-plane>
-
+    
       <!-- Porte gauche -->
       <a-plane
         position="-0.510 2 1"
@@ -101,22 +104,21 @@
         height="4"
         material="side: double; opacity: 1; color: #d46a6a"
         scale="0.5 1 1"
-        color="#d46a6a"
       ></a-plane>
-
+    
       <!-- Porte droite -->
       <a-plane
         position="0.510 2 1"
         rotation=""
         width="2"
         height="4"
-        material="side: double"
+        material="side: double; opacity: 1; color: #d46a6a"
         scale="0.5 1 1"
-        color="#d46a6a"
       ></a-plane>
-
+    
       <!-- Caméra utilisateur -->
       <a-camera position="0 1.6 5"></a-camera>
     </a-scene>
+    
   </body>
 </html>
