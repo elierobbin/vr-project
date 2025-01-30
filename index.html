@@ -6,6 +6,8 @@
 
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.5.4/dist/aframe-extras.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component/dist/aframe-environment-component.min.js"></script>
+
   </head>
   <body>
     <a-scene fog="type: exponential; color: #0F0F0F; density: 0.1">
@@ -21,7 +23,27 @@
       <a-sky color="#000"></a-sky>
 
       <!-- CAMERA -->
-      <a-entity camera look-controls position="-0.430 1.150 -5.1"></a-entity>
+      <!-- <a-entity camera look-controls position="-0.430 1.150 -5.1"></a-entity> -->
+
+      <a-entity id="rig" movement-controls position="-0.430 -0.3 -5.1">
+        <a-entity
+          camera
+          position="0 1.6 0"
+          look-controls="pointerLockEnabled: true"
+          cursor="rayOrigin: mouse"
+        >
+        </a-entity>
+        <a-entity
+          oculus-touch-controls="hand: left"
+          laser-controls="hand: left"
+          raycaster="objects: .clickable; far: 10; showLine: true"
+        ></a-entity>
+        <a-entity
+          oculus-touch-controls="hand: right"
+          laser-controls="hand: right"
+          raycaster="objects: .clickable; far: 10; showLine: true"
+        ></a-entity>
+      </a-entity>
 
       <!-- ASSETS -->
       <a-assets>
@@ -50,6 +72,10 @@
       <a-entity gltf-model="montre.glb" position="-0.075 1.250 -5.530" rotation="180 83.41 92.67" scale="0.05 0.05 0.05">
     </a-entity>
 
+      <!-- MARTEAU -->
+      <a-entity gltf-model="hammer.glb" position="-0.085 1 -5.25" rotation="0 -45 0" scale=".2 .2 .2">
+      </a-entity>
+
     <!-- RADIO -->
     <a-entity gltf-model="radio_final.glb" position="-0.1 1 -5.6" rotation="0 0 0" opacity: 0.5; transparent: true;>
     </a-entity>
@@ -61,7 +87,7 @@
         </a-entity>
         
         <!-- COUTEAU -->
-        <a-entity gltf-model="couteau.glb" position="0.15 0.55 -5.3" scale="0.001 0.001 0.001" rotation="-90 90 -90" opacity:="" 0.5;="" transparent:="" true;="" visible="">
+        <a-entity gltf-model="couteau.glb" position="-0.3 0.6 -4.4" scale="0.001 0.001 0.001" rotation="-90 90 -90" opacity:="" 0.5;="" transparent:="" true;="" visible="">
         </a-entity>
 
       <!-- LAMPADAIRE -->
