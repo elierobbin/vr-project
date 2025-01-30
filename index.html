@@ -3,122 +3,209 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The Grand Budapest Hotel Elevator</title>
-    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+
+    <!-- Importation des bibliothèques -->
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
   </head>
   <body>
-    <a-scene>
-      <!-- Sol -->
-      <a-plane
-        position="0 0 0"
-        rotation="-90 0 0"
-        width="10"
-        height="10"
-        material="color: #2D2D; roughness: 1; metalness: 0.1"
-      ></a-plane>
-    
-      <!-- Lumière ambiante (ajoutée) -->
-      <a-light
-        type="ambient"
-        intensity="0.3"
-        color="#ffffff"
-      ></a-light>
-    
-      <!-- Lumière dans l'ascenseur -->
-      <a-light
-        type="point"
-        position="0 3 0"
-        intensity="1"
-        color="#ffe6cc"
-      ></a-light>
-    
-      <!-- Lumière sur les portes -->
-      <a-light
-        type="point"
-        position="3 3 3"
-        intensity="0.8"
-        color="#ffe6cc"
-      ></a-light>
-    
-      <!-- Lumière sur mur du fond -->
-      <a-light
-        type="point"
-        position="3 3 -3"
-        intensity="0.8"
-        color="#ffe6cc"
-      ></a-light>
-    
-      <!-- Lumière sur murs côtés -->
-      <a-light
-        type="point"
-        position="-3 3 3"
-        intensity="0.8"
-        color="#ffe6cc"
-      ></a-light>
-    
-      <!-- Mur du fond -->
-      <a-plane
-        material="side: double"
-        position="0 2 -1"
-        rotation="0 0 0"
-        width="2"
-        height="4"
-        color="#d46a6a"
-      ></a-plane>
-    
-      <!-- Mur de gauche -->
-      <a-plane
-        material="side: double"
-        position="-1 2 0"
+    <a-scene
+      fog="type: exponential; color: #F7D08B; density: 0.1"
+      renderer="antialias: true; precision: medium; maxCanvasWidth: 4096; maxCanvasHeight: 2048;"
+    >
+      <!-- Sky -->
+      <a-sky color="#3A5F02"></a-sky>
+
+      <!-- Vidéo cachée par défaut pour la crème -->
+      <a-video
+        id="cafe-video"
+        position="0 2.2 -6"
+        width="4"
+        height="2.25"
+        visible="false"
+        opacity="0"
+        playsinline
+        class="clickable"
+      ></a-video>
+
+      <!-- TABLE -->
+      <a-entity
+        id="table"
+        gltf-model="assets/table.glb"
+        position="0 .5 -5.5"
         rotation="0 90 0"
-        width="2"
-        height="4"
-        color="#d46a6a"
-      ></a-plane>
-    
-      <!-- Mur de droite -->
+        scale="1 1 1"
+        class="clickable"
+      ></a-entity>
+
+      <!-- Crème brûlée (élément qui déclenche la vidéo) -->
+      <a-entity
+        id="creme"
+        gltf-model="assets/creme.glb"
+        position="0 0.994 -5.5"
+        rotation="0 90 0"
+        scale="0.05 0.05 0.05"
+        class="clickable"
+      ></a-entity>
+
+      <!-- Ground -->
       <a-plane
-        material="side: double"
-        position="1 2 0"
-        rotation="0 270 0"
-        width="2"
-        height="4"
-        color="#d46a6a"
+        rotation="-90 0 0"
+        width="100"
+        height="100"
+        color="#5A3501"
       ></a-plane>
-    
-      <!-- Plafond -->
-      <a-plane
-        material="side: double"
-        position="0 4 0"
-        rotation="90 0 0"
-        width="10"
-        height="10"
-        material="color: #2D2D; roughness: 1; metalness: 0.1"
-      ></a-plane>
-    
-      <!-- Porte gauche -->
-      <a-plane
-        position="-0.510 2 1"
-        rotation=""
-        width="2"
-        height="4"
-        material="side: double; opacity: 1; color: #d46a6a"
-        scale="0.5 1 1"
-      ></a-plane>
-    
-      <!-- Porte droite -->
-      <a-plane
-        position="0.510 2 1"
-        rotation=""
-        width="2"
-        height="4"
-        material="side: double; opacity: 1; color: #d46a6a"
-        scale="0.5 1 1"
-      ></a-plane>
-    
-      <!-- Caméra utilisateur -->
-      <a-camera position="0 1.6 5"></a-camera>
+
+      <!-- Coffre animé -->
+      <a-entity
+        id="coffre"
+        gltf-model="assets/coffre-anime.glb"
+        position="-5 0 0"
+        rotation="0 90 0"
+        scale="1 1 1"
+        class="clickable"
+      ></a-entity>
+
+      <!-- Vidéo cachée par défaut pour le coffre -->
+      <a-video
+        id="coffre-video"
+        position="-5 2.2 0.050"
+        rotation="0 90 0"
+        width="4"
+        height="2.25"
+        visible="false"
+        opacity="0"
+        playsinline
+        class="clickable"
+      ></a-video>
+
+      <!-- Camera with Cursor -->
+      <a-camera position="0 1.6 0" raycaster="objects: .clickable">
+        <a-cursor color="red"></a-cursor>
+      </a-camera>
+
+      <!-- Pop-up de bienvenue -->
+      <a-entity id="popup"
+                position="0 2 -3"
+                geometry="primitive: plane; width: 7; height: 2"
+                material="color: white; opacity: 1"
+                visible="true"
+                class="clickable">
+        <a-text value="Bienvenue dans l'univers du film Le Fabuleux Destin d'Amélie Poulain. En cliquant sur les éléments présents dans cet espace, vous pourrez revivre les scènes qui leur sont associées. Bonne visite !"
+                position="0 0 0.1"
+                width="6"
+                color="black"
+                align="center"
+                wrap-count="50"></a-text>
+        
+        <a-entity id="ok-button"
+                  position="0 -1 0"
+                  geometry="primitive: box; width: 1; height: .5; depth: 0.1"
+                  material="color: green"
+                  class="clickable">
+          <a-text value="OK"
+                  position="0 0 0.1"
+                  color="white"
+                  align="center"></a-text>
+        </a-entity>
+      </a-entity>
+
     </a-scene>
-    
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const videoElement = document.querySelector("#cafe-video");
+        const videoCoffre = document.querySelector("#coffre-video"); // Vidéo du coffre
+        const creme = document.querySelector("#creme"); // Sélection du flan
+        const coffre = document.querySelector("#coffre");
+        const popup = document.querySelector("#popup");
+        const okButton = document.querySelector("#ok-button");
+        const camera = document.querySelector("a-camera");
+        let videoPlaying = null; // On garde une référence à la vidéo en lecture
+
+        // Créer une vidéo dans le DOM pour pouvoir la jouer
+        const video = document.createElement("video");
+        video.src = "assets/cafe-video.mp4";
+        video.load(); // Assurez-vous que la vidéo est prête à être lue
+        video.preload = "auto"; // Précharge la vidéo
+
+        // Verrouillage de la caméra (empêche de se déplacer)
+        let isPopupVisible = true;
+        camera.setAttribute("wasd-controls", "enabled", false);
+
+        // Fonction pour gérer la lecture et la pause des vidéos
+        function handleVideoPlayback(videoId, videoElement, videoFile) {
+          if (videoPlaying && videoPlaying !== videoElement) {
+            // Mettre en pause la vidéo précédente si elle est lue
+            videoPlaying.pause();
+            videoPlaying.setAttribute("opacity", "0.5"); // Légère transparence pour indiquer la pause
+            videoPlaying.currentTime = 0; // Revenir au début
+          }
+
+          // Lire la nouvelle vidéo en arrière-plan, sans interférer avec l'animation du coffre
+          videoElement.setAttribute("visible", "true");
+          videoElement.setAttribute("opacity", "0.2"); // Légère transparence pour laisser voir l'animation
+          videoElement.setAttribute("src", videoFile);
+
+          const newVideo = document.createElement("video");
+          newVideo.src = videoFile;
+          newVideo.load();
+          newVideo.play();
+          videoPlaying = videoElement; // Marquer cette vidéo comme étant en lecture
+        }
+
+        // Lancement de la vidéo au clic sur la crème
+        creme.addEventListener("click", function () {
+          handleVideoPlayback("creme", videoElement, "assets/cafe-video.mp4");
+        });
+
+        // Pause et reprise de la vidéo au clic sur la vidéo
+        videoElement.addEventListener("click", function () {
+          if (video.paused) {
+            video.play();
+            videoElement.setAttribute("opacity", "1"); // Rendre visible la vidéo
+          } else {
+            video.pause();
+            videoElement.setAttribute("opacity", "0.5"); // Légère transparence pour montrer que la vidéo est en pause
+          }
+        });
+
+        // Événement lorsque la vidéo se termine
+        video.addEventListener("ended", function () {
+          videoPlaying = null; // Réinitialiser l'état de lecture une fois la vidéo terminée
+          videoElement.setAttribute("visible", "false"); // Cacher la vidéo une fois terminée
+          videoElement.setAttribute("opacity", "0"); // Réinitialiser l'opacité
+        });
+
+        // Fonctionnalité du coffre : lancement de la vidéo au clic sur le coffre
+        coffre.addEventListener("click", function () {
+          handleVideoPlayback("coffre", videoCoffre, "assets/coffre-video.mp4");
+        });
+
+        // Pause et reprise de la vidéo au clic sur la vidéo du coffre
+        videoCoffre.addEventListener("click", function () {
+          if (video.paused) {
+            video.play();
+            videoCoffre.setAttribute("opacity", "1"); // Rendre visible la vidéo
+          } else {
+            video.pause();
+            videoCoffre.setAttribute("opacity", "0.5"); // Légère transparence pour montrer que la vidéo est en pause
+          }
+        });
+
+        // Événement lorsque la vidéo se termine
+        videoCoffre.addEventListener("ended", function () {
+          videoPlaying = null; // Réinitialiser l'état de lecture une fois la vidéo terminée
+          videoCoffre.setAttribute("visible", "false"); // Cacher la vidéo une fois terminée
+          videoCoffre.setAttribute("opacity", "0"); // Réinitialiser l'opacité
+        });
+
+        // Lorsqu'on clique sur "OK", on ferme la pop-up et réactive le mouvement
+        okButton.addEventListener("click", function () {
+          popup.setAttribute("visible", "false"); // Masque la pop-up
+          camera.setAttribute("wasd-controls", "enabled", true); // Réactive le mouvement
+        });
+      });
+    </script>
   </body>
 </html>
