@@ -12,6 +12,10 @@
   <body>
     <a-scene fog="type: exponential; color: #0F0F0F; density: 0.1">
 
+      <a-assets>
+        <audio id="sound1" src="./nightcall.mp3"></audio>
+      </a-assets>
+      
       <!-- Lumière (Spotlight) -->
       <a-light type="spot" position="0.24313 4 2.77159" intensity="1" angle="30" penumbra="0.5" target="#ground" castshadow="true" color="#023e8a">
       </a-light>
@@ -77,7 +81,7 @@
       </a-entity>
 
     <!-- RADIO -->
-    <a-entity gltf-model="radio_final.glb" position="-0.1 1 -5.6" rotation="0 0 0" opacity: 0.5; transparent: true;>
+        <a-entity gltf-model="radio_final.glb" class="clickable" position="-0.1 1 -5.6" rotation="0 0 0" opacity: 0.5; transparent: true; play-sound="soundId: sound1">
     </a-entity>
 
         <!-- SAC ARGENT -->
@@ -97,5 +101,24 @@
       </a-entity>
 
     </a-scene>
+
+
+    <script>
+      // Component to enable rotation on interaction
+      AFRAME.registerComponent("play-sound", {
+        schema: {
+          soundId: { type: "string", default: "sound" },
+        },
+        init: function () {
+          this.el.addEventListener("click", () => {
+            const soundId = this.data.soundId;
+            const sound = document.querySelector("a-entity[sound]");
+            sound.setAttribute("sound", `src: #${soundId}`);
+            console.log(sound);
+            sound.components.sound.playSound();
+          });
+        },
+      });
+    </script>
   </body>
 </html>
